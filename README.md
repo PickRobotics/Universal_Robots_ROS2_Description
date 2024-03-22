@@ -1,6 +1,6 @@
 # Universal_Robots_ROS2_Description
 
-This repository contains description files and meshes for *Universal Robots* manipulators.
+이 repository는 *Universal Robots* manipulators에 대한 description 파일과 meshes 파일을 포함하고 있습니다.
 
 ### Build status
 
@@ -29,41 +29,34 @@ All other content is licensed under the BSD-3-Clause license
 
 ## Structure of the repository
 
-The most relevant files are:
-  - `urdf/ur_macro.xacro` - macro file with UR-manipulator description. This file is usually included into external projects to visualize and configure UR manipulators properly. An example how to use this macro is in `urdf/ur.urdf.xacro` file.
-  - `urdf/ur.ros2_control.xacro` - definition of manipulator's joints and interfaces for `ros2_control` framework.
+가장 관련있는 파일들 :
+  - `urdf/ur_macro.xacro` - UR-manipulator description이 포함된 매크로 파일입니다. 이 파일은 일반적으로 외부 프로젝트에 포함되어 UR manipulators를 정확하게 시각화 및 구성하기 위해 사용됩니다. 이 매크로를 사용하는 방법의 예는 `urdf/ur.urdf.xacro` 파일에 있습니다.
+  - `urdf/ur.ros2_control.xacro` - `ros2_control` 프레임워크를 위해서 manipulator의 joint와 인터페이스를 정의.
 
-## Testing description of a manipulator
+## manipulator의 description을 테스팅
 
-To visualize the robot install this repository to you workspace and execute the following:
+robot 시각화를 위해서 이 repository를 여러분의 workspace에 설치하고 아래와 같이 실행하세요.:
 ```
 ros2 launch ur_description view_ur.launch.py ur_type:=ur5e
 ```
 
-To test other descriptions change the `ur_type` argument.
+`ur_type` 인자를 변경하여 다른 descriptions을 테스트할 수 있습니다.
 
 ## Package / Description structure
-This package uses one description for all robots. The different robot variants are configured using
-four configuration files. These files can also be changed for further customizing a description.
+이 패키지는 모든 로봇에 대해 하나의 description을 사용합니다.  다양한 로봇 변형은 네 개의 설정 파일을 사용하여 구성됩니다. 이러한 파일들은 description을 추가로 커스터마이징하기 위해 변경할 수도 있습니다.
 
 ![urdf structure](doc/structure.svg)
 
-Basically, the description can be modified using configuration values stored in four files:
+기본적으로 description은 다음과 같은 4개의 파일에 저장된 설정값을 사용하여 수정할 수 있습니다.:
  - `config/urXX/default_kinematics.yaml` - This contains the calibration values as they can be
    extracted from the robot. Changing these values with the one extracted from a real robot will
    result in a description matching the real robot exactly (w.r.t the `tool0` frame). It is highly
    recommended to use matching kinematic values in real-world applications.
- - `config/urXX/joint_limits.yaml` - If you'd like to further restrict the robot's joint limits,
-   these limits can be modified there.
- - `config/urXX/physical_parameters.yaml` - Everything regarding physics simulation parameters
-   (e.g. inertia poses and values) can be tuned here
- - `config/urXX/visual_parameters.yaml` - Some users change certain visual aspects, e.g. replacing
-   the cap on the wrist_3_link. This config file specifies which meshes (both, visual and collision)
-   should be used.
+ - `config/urXX/joint_limits.yaml` - 로봇의 조인트 제한을 더 제한하려면, 이러한 제한을 여기에서 수정할 수 있습니다.
+ - `config/urXX/physical_parameters.yaml` - 물리 시뮬레이션 파라미터(예: 관성 포즈 및 값)에 대한 모든 것은 여기에서 조정할 수 있습니다.
+ - `config/urXX/visual_parameters.yaml` - 일부 사용자는 wrist_3_link의 cap을 교체하는 것과 같이 특정 시각적 측면을 변경합니다. 이 설정 파일은 사용해야 하는 메쉬(시각적, 충돌 모두)를 지정합니다.
 
-The four configuration files have to be passed to `ur_macro.urdf` (more specific to the macro
-defined in that file) which is done inside the `ur.urdf.macro`. Contents of the files are parsed
-inside `ur_common.xacro`.
+4개의 설정 파일은 `ur.urdf.macro` 내부에서 수행되는 `ur_macro.urdf` (해당 파일에서 정의된 매크로에 더 구체적인)에 전달되어야 합니다. 파일 내용은 `ur_common.xacro` 내부에서 파싱됩니다.
 
 Arguments that have to be passed to the main `ur.urdf.xacro` file are:
  - kinematics_params - Filename to the `default_kinematics.yaml` (or equivalent specific kinematics) file
